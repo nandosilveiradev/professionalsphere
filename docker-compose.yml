@@ -4,11 +4,12 @@ services:
       context: .
       dockerfile: docker/Dockerfile
     container_name: ps_app
-    env_file:
-      - .env
     ports:
       - "3000:3000"
-    restart: always
+    volumes:
+      - ./web:/app
+    command: npm run dev
+
     depends_on:
       - db
 

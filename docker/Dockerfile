@@ -2,10 +2,12 @@ FROM node:20-slim
 
 WORKDIR /app
 
-COPY app/package*.json ./
+# Copia apenas os manifests do Next (web/)
+COPY web/package*.json ./
 RUN npm install
 
-COPY app .
+# Copia o restante do projeto Next
+COPY web .
 
 EXPOSE 3000
 
