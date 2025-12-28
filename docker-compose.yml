@@ -3,15 +3,22 @@ services:
     build:
       context: .
       dockerfile: docker/Dockerfile
+    dns:
+     - 8.8.8.8
+     - 1.1.1.1
     container_name: ps_app
+    env_file:        # <--- ADICIONE ISSO
+      - ./web/.env         # <--- ADICIONE ISSO
     ports:
       - "3000:3000"
+      - "5555:5555"
     volumes:
       - ./web:/app
     command: npm run dev
-
     depends_on:
       - db
+    networks:
+      - ps_network
 
   db:
     image: postgres:15
@@ -20,9 +27,9 @@ services:
       - .env
     volumes:
       - ./postgresql/pgdata:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
     restart: always
+    networks:
+      - ps_network
 
   proxy:
     image: jc21/nginx-proxy-manager:latest
@@ -37,4 +44,11 @@ services:
     volumes:
       - ./nginx/data:/data
       - ./nginx/letsencrypt:/etc/letsencrypt
+    networks:
+      - ps_network
+
+networks:
+  ps_network:
+    driver: bridge
+
 

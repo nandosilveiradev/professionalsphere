@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: http://professionalsphere.duckdns.org
+
+# Sitemaps
+Sitemap: http://professionalsphere.duckdns.org/sitemap.xml

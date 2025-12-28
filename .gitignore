@@ -67,3 +67,4 @@ nginx/letsencrypt/
 # Git
 ########################################
 .git-rewrite/
+.env.docker

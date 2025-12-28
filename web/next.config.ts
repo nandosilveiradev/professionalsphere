@@ -1,7 +1,8 @@
-import type { NextConfig } from "next";
+// prisma.config.ts
+import { defineConfig } from '@prisma/config'
 
-const nextConfig: NextConfig = {
-  /* config options here */
-};
-
-export default nextConfig;
+export default defineConfig({
+  datasource: {
+    url: process.env.DATABASE_URL,
+  },
+})

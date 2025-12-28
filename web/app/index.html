@@ -1,0 +1,210 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Professional Sphere</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style type="text/css" media="screen">
+/* styles.css */
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: #f9f9f9;
+  color: #333;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #ccc;
+  z-index: 1000;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.login {
+  color: #555;
+}
+
+.signup {
+  background: #000;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 6px;
+}
+
+.hero {
+  padding: 120px 0 60px;
+  background: linear-gradient(to bottom, #fff, #f0f0f0);
+  text-align: center;
+}
+
+.badge {
+  display: inline-block;
+  border: 1px solid #ccc;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 14px;
+  color: #666;
+}
+
+.hero h1 {
+  font-size: 48px;
+  font-weight: 800;
+  margin: 20px 0;
+}
+
+.hero p {
+  font-size: 18px;
+  color: #666;
+  max-width: 700px;
+  margin: 0 auto 30px;
+}
+
+.hero-actions {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.btn-primary {
+  background: #000;
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 10px;
+  text-decoration: none;
+}
+
+.btn-secondary {
+  border: 1px solid #ccc;
+  padding: 12px 24px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: #555;
+}
+
+.section {
+  padding: 80px 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  font-size: 18px;
+  color: #555;
+}
+
+.list li {
+  margin-bottom: 10px;
+}
+
+.footer {
+  padding: 40px 20px;
+  text-align: center;
+  font-size: 14px;
+  color: #777;
+  background: #fff;
+  border-top: 1px solid #eee;
+}
+</style>
+</head>
+<body>
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="container">
+      <div class="logo">
+        <img src="logo.png" alt="Professional Sphere" />
+        <span>Professional Sphere</span>
+      </div>
+      <nav class="nav-links">
+        <a href="#inicio">Início</a>
+        <a href="#problema">O problema</a>
+        <a href="#como-funciona">Como funciona</a>
+        <a href="#vagas-vivas">Vagas vivas</a>
+        <a href="#projetos">Projetos</a>
+        <a href="#avaliacoes">Avaliações</a>
+        <a href="#matching">Matching</a>
+      </nav>
+      <div class="nav-actions">
+        <a href="/login" class="login">Entrar</a>
+        <a href="/login" class="signup">Criar conta</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section id="inicio" class="hero">
+      <div class="container">
+        <span class="badge">Um novo padrão para o mercado profissional</span>
+        <h1>Professional Sphere<br />Reputação não se declara.<br />Reputação se constrói.</h1>
+        <p>Um ecossistema onde profissionais, empresas e projetos se conectam por meio de entregas reais, avaliações mútuas e histórico público. Menos ruído. Mais evidência.</p>
+        <div class="hero-actions">
+          <a href="/login" class="btn-primary">Entrar na plataforma</a>
+          <a href="https://github.com/nandosilveiradev/professionalsphere/wiki" target="_blank" class="btn-secondary">Entender a proposta</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Seções subsequentes -->
+    <section id="problema" class="section">
+      <div class="container grid">
+        <div>
+          <h2>O mercado profissional está ruidoso.</h2>
+          <p>Vagas que não existem mais. Portfólios inflados. Pouca transparência sobre como empresas realmente operam. Encontrar oportunidades legítimas se tornou mais difícil do que deveria.</p>
+          <p>O problema não é falta de vagas. É excesso de vagas irreais. O Professional Sphere foi desenhado para mostrar apenas o que é vivo, verificável e rastreável.</p>
+        </div>
+        <ul class="list">
+          <li>Projetos</li>
+          <li>Eventos</li>
+          <li>Vaga CLT</li>
+          <li>Vaga PJ / Freelancer</li>
+          <li>Vaga Temporária / Squad</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Outras seções seguem o mesmo padrão -->
+    <!-- COMO FUNCIONA, VAGAS VIVAS, PROJETOS, AVALIAÇÕES, MATCHING, MANIFESTO -->
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <p>Professional Sphere — Porque o que você constrói importa mais do que o que você diz.</p>
+    </footer>
+  </main>
+</body>
+</html>
