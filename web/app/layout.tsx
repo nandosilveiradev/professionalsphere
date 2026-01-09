@@ -1,6 +1,19 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import "./styles/globals.css";
+import {
+  Layers,
+  Rocket,
+  Star,
+  Brain,
+  Globe,
+  Briefcase,
+  Users,
+  CheckCircle,
+  Calendar,
+  Building2,
+  Timer,
+} from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Professional Sphere",

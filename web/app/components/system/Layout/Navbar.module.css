@@ -56,3 +56,6 @@
 .navbar__dropdown-link:hover {
   background: #f3f4f6;
 }
+nav a{
+  padding: 10px 15px;
+}

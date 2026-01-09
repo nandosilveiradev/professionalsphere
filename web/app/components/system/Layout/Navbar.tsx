@@ -14,7 +14,7 @@ export default function Navbar({ brand, items }: NavbarProps) {
   const [open, setOpen] = useState<string | null>(null);
 
   return (
-    <nav className="navbar">
+    <nav className="navbar ">
       <div className="navbar__brand">{brand}</div>
 
       <ul className="navbar__menu">
@@ -48,6 +48,8 @@ export default function Navbar({ brand, items }: NavbarProps) {
           ))}
       </ul>
     </nav>
+    
+
     );
 }
 
