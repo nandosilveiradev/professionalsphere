@@ -81,6 +81,30 @@ Modelagem completa de:
 - reputação  
 - histórico de versões  
 
+# 🔐 Autenticação e Proteção de Rotas
+
+O sistema utiliza **JWT** armazenado em cookies HttpOnly para autenticação.  
+- Middleware protege rotas privadas como `/dashboard`.  
+- Validação de token ocorre no **server side** usando `jwtVerify`.  
+- Logout remove o token e redireciona para `/login`.  
+
+# 🛠️ Infraestrutura
+
+- Containers Docker para aplicação e banco de dados  
+- Volumes para persistência  
+- Redes internas entre serviços  
+- Nginx Proxy Manager com SSL automático  
+- Integração com Cloudflare para DNS e proxy  
+- Suporte a domínio gratuito `.eu.org`  
+
+# 🚀 CI/CD
+
+Pipeline planejado para:
+- Build automático de imagens Docker  
+- Testes automatizados  
+- Deploy contínuo via GitHub Actions  
+
+
 ### **Autenticação**
 - PF, PJ e Empresa como papéis  
 - Tokens  
@@ -109,115 +133,115 @@ O ProfessionalSphere utiliza URLs otimizadas para SEO com hash único:
 **Formato:**  
 `/<tipo>/<slug>-<hash8>`
 
-**Exemplos:**
+  **Exemplos:**
 
-- `/profissional/nando-silveira-8d42d848`
-- `/projeto/sistema-de-pagamentos-empresa-x-4f9a2c1b`
-- `/vaga/desenvolvedor-react-pleno-7c1e9a44`
-- `/empresa/tech-solutions-91b2c4e1`
+  - `/profissional/nando-silveira-8d42d848`
+  - `/projeto/sistema-de-pagamentos-empresa-x-4f9a2c1b`
+  - `/vaga/desenvolvedor-react-pleno-7c1e9a44`
+  - `/empresa/tech-solutions-91b2c4e1`
 
-✅ Hash é fixo  
-✅ Slug pode mudar sem quebrar a URL  
+  ✅ Hash é fixo  
+  ✅ Slug pode mudar sem quebrar a URL  
 
----
+  ---
 
-# 🌐 SEO e Indexação
+  # 🌐 SEO e Indexação
 
-- Perfis, vagas e projetos são **públicos e indexáveis**  
-- SSR/SSG com Next.js  
-- Metatags dinâmicas  
-- Schema.org para:
+  - Perfis, vagas e projetos são **públicos e indexáveis**  
+  - SSR/SSG com Next.js  
+  - Metatags dinâmicas  
+  - Schema.org para:
   - Person  
   - Organization  
   - JobPosting  
   - CreativeWork  
   - Review  
 
-Isso cria um ecossistema altamente rastreável e com forte tráfego orgânico.
+  Isso cria um ecossistema altamente rastreável e com forte tráfego orgânico.
 
----
+  ---
 
-# 🧩 Sistema de Projetos e Portfólio Vivo
+  # 🧩 Sistema de Projetos e Portfólio Vivo
 
-Cada projeto possui:
+  Cada projeto possui:
 
-✅ Dono principal  
-✅ Múltiplos participantes  
-✅ Empresa associada  
-✅ Hard skills aplicadas  
-✅ Soft skills aplicadas  
-✅ Página pública indexável  
-✅ Hash único  
-✅ Histórico de versões  
-✅ Reavaliação obrigatória após edição  
+  ✅ Dono principal  
+  ✅ Múltiplos participantes  
+  ✅ Empresa associada  
+  ✅ Hard skills aplicadas  
+  ✅ Soft skills aplicadas  
+  ✅ Página pública indexável  
+  ✅ Hash único  
+  ✅ Histórico de versões  
+  ✅ Reavaliação obrigatória após edição  
 
-Quando um projeto é editado:
+  Quando um projeto é editado:
 
-- avaliações são zeradas  
-- projeto entra em “aguardando reavaliação”  
-- empresa e equipe recebem notificação  
-- só volta ao ranking após nova avaliação  
+  - avaliações são zeradas  
+  - projeto entra em “aguardando reavaliação”  
+  - empresa e equipe recebem notificação  
+  - só volta ao ranking após nova avaliação  
 
----
+  ---
 
-# ⭐ Avaliações Multilaterais
+  # ⭐ Avaliações Multilaterais
 
-Cada projeto possui **3 sistemas de avaliação**:
+  Cada projeto possui **3 sistemas de avaliação**:
 
-### ✅ 1. Avaliação da Empresa Contratante
-- qualidade da entrega  
-- comunicação  
-- profissionalismo  
-- resultado final  
+  ### ✅ 1. Avaliação da Empresa Contratante
+  - qualidade da entrega  
+  - comunicação  
+  - profissionalismo  
+  - resultado final  
 
-### ✅ 2. Avaliação dos Participantes
-- colaboração  
-- soft skills  
-- responsabilidade  
-- qualidade técnica  
+  ### ✅ 2. Avaliação dos Participantes
+  - colaboração  
+  - soft skills  
+  - responsabilidade  
+  - qualidade técnica  
 
-### ✅ 3. Avaliação do Projeto
-- complexidade  
-- impacto  
-- organização  
-- resultado geral  
+  ### ✅ 3. Avaliação do Projeto
+  - complexidade  
+  - impacto  
+  - organização  
+  - resultado geral  
 
-Essas avaliações alimentam:
+  Essas avaliações alimentam:
 
-✅ reputação do profissional  
-✅ reputação da empresa  
-✅ ranking do projeto  
-✅ matching avançado  
+  ✅ reputação do profissional  
+  ✅ reputação da empresa  
+  ✅ ranking do projeto  
+  ✅ matching avançado  
 
----
+  ---
 
-# 🔄 Expiração e Repostagem Inteligente
+  # 🔄 Expiração e Repostagem Inteligente
 
-- Vagas e projetos expiram automaticamente  
-- Criador pode **repostar com 1 clique**  
-- Ideal para substituições rápidas  
-- Mantém o feed limpo e atualizado  
-- Evita vagas antigas e projetos abandonados  
+  - Vagas e projetos expiram automaticamente  
+  - Criador pode **repostar com 1 clique**  
+  - Ideal para substituições rápidas  
+  - Mantém o feed limpo e atualizado  
+  - Evita vagas antigas e projetos abandonados  
 
----
+  ---
 
-# 🔧 Links Úteis
+  # 🔧 Links Úteis
 
-- **Repositório GitHub**  
-- **Issues**  
-- **Pull Requests**  
-- **Projects (Kanban)**  
-- **Releases**  
-- **Actions (CI/CD)**  
-- **README.md**  
-- **Página de Contribuição**  
+  - **Repositório GitHub**  
+  - **Issues**  
+  - **Pull Requests**  
+  - **Projects (Kanban)**  
+  - **Releases**  
+  - **Actions (CI/CD)**  
+  - **README.md**  
+  - **Página de Contribuição**  
 
----
+  ---
 
-# ✅ Finalização
+  # ✅ Finalização
 
-Esta página serve como índice central da documentação do **ProfessionalSphere**, reunindo
-arquitetura, decisões, convenções e visão geral do ecossistema.
+  Esta página serve como índice central da documentação do **ProfessionalSphere**, reunindo
+  arquitetura, decisões, convenções e visão geral do ecossistema.
 
 
 

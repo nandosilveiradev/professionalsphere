@@ -4,11 +4,11 @@ services:
       context: .
       dockerfile: docker/Dockerfile
     dns:
-     - 8.8.8.8
-     - 1.1.1.1
+      - 8.8.8.8
+      - 1.1.1.1
     container_name: ps_app
-    env_file:        # <--- ADICIONE ISSO
-      - ./web/.env         # <--- ADICIONE ISSO
+    env_file:
+      - ./web/.env
     ports:
       - "3000:3000"
       - "5555:5555"
@@ -30,6 +30,8 @@ services:
     restart: always
     networks:
       - ps_network
+    ports: 
+      - "5432:5432"
 
   proxy:
     image: jc21/nginx-proxy-manager:latest
@@ -50,5 +52,3 @@ services:
 networks:
   ps_network:
     driver: bridge
-
-
