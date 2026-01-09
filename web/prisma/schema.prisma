@@ -1,4 +1,3 @@
-// prisma/schema.prisma
 generator client {
   provider = "prisma-client-js"
   output   = "../app/generated/prisma"
@@ -6,7 +5,6 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  // A url foi removida daqui
 }
 
 model User {
@@ -20,5 +18,293 @@ model User {
   createdAt  DateTime @default(now())
   updatedAt  DateTime @default(now()) @updatedAt
 
+  profilePF  ProfilePF?
+  profilePJ  ProfilePJ?
+
   @@unique([fullName, urlHash], name: "fullName_urlHash")
+}
+
+model ProfilePF {
+  id        Int @id @default(autoincrement())
+  userId    Int @unique
+  user      User @relation(fields: [userId], references: [id])
+
+  openProjects   OpenProject[]
+  openServices   OpenService[]
+  closedProjects ClosedProject[]
+  closedServices ClosedService[]
+  professionalExperiences ProfessionalExperience[]
+  givenReviews   Review[] @relation("ReviewerPF")
+  receivedReviews Review[] @relation("ReviewedPF")
+  skills         SkillProfile[]
+  candidates     Candidate[] @relation("CandidatePF")
+  notifications  Notification[] @relation("PFNotifications")
+}
+
+model ProfilePJ {
+  id        Int @id @default(autoincrement())
+  userId    Int @unique
+  user      User @relation(fields: [userId], references: [id])
+
+  companyId Int
+  company   Company @relation(fields: [companyId], references: [id], name: "CompanyProfiles")
+
+  projects      PJProject[]
+  services      PJService[]
+  reviewsGiven  Review[] @relation("ReviewerPJ")
+  reviewsReceived Review[] @relation("ReviewedPJ")
+  skills        SkillProfile[]
+  openProjects  OpenProject[]
+  openServices  OpenService[]
+  closedProjects ClosedProject[]
+  closedServices ClosedService[]
+  notifications Notification[] @relation("PJNotifications")
+}
+
+enum ExperienceStatus {
+  WORKING
+  ENDED
+}
+
+enum VacancyStatus {
+  ACTIVE
+  EXPIRED
+  CLOSED
+}
+
+enum CandidateStatus {
+  APPLIED
+  INTERVIEW
+  REJECTED
+  HIRED
+}
+
+model Company {
+  id        Int @id @default(autoincrement())
+  name      String @unique
+  cnpj      String?
+  createdAt DateTime @default(now())
+
+  projects     PJProject[]
+  services     PJService[]
+  vacancies    JobVacancy[]
+  experiences  ProfessionalExperience[]
+  profiles     ProfilePJ[] @relation("CompanyProfiles")
+}
+
+model PJProject {
+  id          Int @id @default(autoincrement())
+  title       String
+  description String
+  createdAt   DateTime @default(now())
+  startDate   DateTime
+  endDate     DateTime?
+  companyId   Int
+  profilePJId Int?
+
+  company   Company @relation(fields: [companyId], references: [id])
+  profilePJ ProfilePJ? @relation(fields: [profilePJId], references: [id])
+  openProjects   OpenProject[]
+  closedProjects ClosedProject[]
+  reviews        Review[] @relation("ReviewedProject")
+}
+
+model PJService {
+  id          Int @id @default(autoincrement())
+  title       String
+  description String
+  createdAt   DateTime @default(now())
+  startDate   DateTime
+  endDate     DateTime?
+  companyId   Int
+  profilePJId Int?
+
+  company   Company @relation(fields: [companyId], references: [id])
+  profilePJ ProfilePJ? @relation(fields: [profilePJId], references: [id])
+  openServices   OpenService[]
+  closedServices ClosedService[]
+  reviews        Review[] @relation("ReviewedService")
+}
+
+model JobVacancy {
+  id           Int @id @default(autoincrement())
+  title        String
+  description  String
+  createdAt    DateTime @default(now())
+  startDate    DateTime
+  endStatus    VacancyStatus @default(ACTIVE)
+  endDate      DateTime?
+  expiredDate  DateTime @default(dbgenerated("CURRENT_TIMESTAMP + interval '15 days'"))
+  companyId    Int
+
+  company      Company @relation(fields: [companyId], references: [id])
+  vacancyCount Int @default(1)
+  isActive     Boolean @default(true)
+
+  reviews      Review[] @relation("ReviewedVacancy")
+  candidates   Candidate[]
+}
+
+model Candidate {
+  id          Int @id @default(autoincrement())
+  profilePFId Int
+  vacancyId   Int
+  status      CandidateStatus @default(APPLIED)
+  hired       Boolean @default(false)
+
+  profilePF   ProfilePF @relation(fields: [profilePFId], references: [id], name: "CandidatePF")
+  vacancy     JobVacancy @relation(fields: [vacancyId], references: [id])
+}
+
+model OpenProject {
+  id          Int @id @default(autoincrement())
+  projectId   Int
+  profilePFId Int?
+  profilePJId Int?
+  openedAt    DateTime @default(now())
+
+  project     PJProject @relation(fields: [projectId], references: [id])
+  profilePF   ProfilePF? @relation(fields: [profilePFId], references: [id])
+  profilePJ   ProfilePJ? @relation(fields: [profilePJId], references: [id])
+}
+
+model OpenService {
+  id          Int @id @default(autoincrement())
+  serviceId   Int
+  profilePFId Int?
+  profilePJId Int?
+  openedAt    DateTime @default(now())
+
+  service     PJService @relation(fields: [serviceId], references: [id])
+  profilePF   ProfilePF? @relation(fields: [profilePFId], references: [id])
+  profilePJ   ProfilePJ? @relation(fields: [profilePJId], references: [id])
+}
+
+model ClosedProject {
+  id               Int @id @default(autoincrement())
+  projectId        Int
+  profilePFId      Int?
+  profilePJId      Int?
+  openedAt         DateTime
+  finishedAt       DateTime @default(now())
+  lastModifiedAt   DateTime @default(now())
+  evaluationStatus String @default("pending")
+  showInPortfolio  Boolean @default(false)
+
+  project     PJProject @relation(fields: [projectId], references: [id])
+  profilePF   ProfilePF? @relation(fields: [profilePFId], references: [id])
+  profilePJ   ProfilePJ? @relation(fields: [profilePJId], references: [id])
+}
+
+model ClosedService {
+  id               Int @id @default(autoincrement())
+  serviceId        Int
+  profilePFId      Int?
+  profilePJId      Int?
+  openedAt         DateTime
+  finishedAt       DateTime @default(now())
+  lastModifiedAt   DateTime @default(now())
+  evaluationStatus String @default("pending")
+  showInPortfolio  Boolean @default(false)
+
+  service     PJService @relation(fields: [serviceId], references: [id])
+  profilePF   ProfilePF? @relation(fields: [profilePFId], references: [id])
+  profilePJ   ProfilePJ? @relation(fields: [profilePJId], references: [id])
+}
+
+model ProfessionalExperience {
+  id          Int @id @default(autoincrement())
+  profilePFId Int
+  title       String
+  description String
+  companyId   Int
+  startDate   DateTime
+  endStatus   ExperienceStatus @default(WORKING)
+  endDate     DateTime?
+
+  profilePF   ProfilePF @relation(fields: [profilePFId], references: [id])
+  company     Company @relation(fields: [companyId], references: [id])
+  skills      SkillExperience[]
+  achievements Achievement[]
+}
+
+model Achievement {
+  id           Int @id @default(autoincrement())
+  experienceId Int
+  description  String
+
+  experience   ProfessionalExperience @relation(fields: [experienceId], references: [id])
+}
+
+model Review {
+  id                 Int @id @default(autoincrement())
+  reviewerPFId       Int?
+  reviewerPJId       Int?
+  reviewedPFId       Int?
+  reviewedPJId       Int?
+  reviewedProjectId  Int?
+  reviewedServiceId  Int?
+  reviewedVacancyId  Int?
+  comment            String?
+  createdAt          DateTime @default(now())
+
+  reviewerPF     ProfilePF?    @relation("ReviewerPF", fields: [reviewerPFId], references: [id])
+  reviewerPJ     ProfilePJ?    @relation("ReviewerPJ", fields: [reviewerPJId], references: [id])
+  reviewedPF     ProfilePF?    @relation("ReviewedPF", fields: [reviewedPFId], references: [id])
+  reviewedPJ     ProfilePJ?    @relation("ReviewedPJ", fields: [reviewedPJId], references: [id])
+  reviewedProject PJProject?    @relation("ReviewedProject", fields: [reviewedProjectId], references: [id])
+  reviewedService PJService?    @relation("ReviewedService", fields: [reviewedServiceId], references: [id])
+  reviewedVacancy JobVacancy?   @relation("ReviewedVacancy", fields: [reviewedVacancyId], references: [id])
+
+  criteria         ReviewCriteria[]
+}
+
+model ReviewCriteria {
+  id       Int @id @default(autoincrement())
+  reviewId Int
+  name     String   // exemplo: "COMMUNICATION", "QUALITY"
+  value    Int      // nota 1-5
+
+  review   Review @relation(fields: [reviewId], references: [id])
+}
+
+model Skill {
+  id   Int @id @default(autoincrement())
+  name String @unique
+
+  profiles    SkillProfile[]    @relation("SkillProfiles")
+  experiences SkillExperience[] @relation("SkillExperiences")
+}
+
+model SkillProfile {
+  id          Int @id @default(autoincrement())
+  profilePFId Int?
+  profilePJId Int?
+  skillId     Int
+
+  profilePF   ProfilePF? @relation(fields: [profilePFId], references: [id])
+  profilePJ   ProfilePJ? @relation(fields: [profilePJId], references: [id])
+  skill       Skill @relation(fields: [skillId], references: [id], name: "SkillProfiles")
+}
+
+model SkillExperience {
+  id           Int @id @default(autoincrement())
+  experienceId Int
+  skillId      Int
+
+  experience   ProfessionalExperience @relation(fields: [experienceId], references: [id])
+  skill        Skill @relation(fields: [skillId], references: [id], name: "SkillExperiences")
+}
+
+model Notification {
+  id          Int @id @default(autoincrement())
+  profilePFId Int?
+  profilePJId Int?
+  message     String
+  type        String
+  read        Boolean @default(false)
+  createdAt   DateTime @default(now())
+
+  profilePF   ProfilePF? @relation(fields: [profilePFId], references: [id], name: "PFNotifications")
+  profilePJ   ProfilePJ? @relation(fields: [profilePJId], references: [id], name: "PJNotifications")
 }
