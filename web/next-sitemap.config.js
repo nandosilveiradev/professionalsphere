@@ -1,5 +1,5 @@
 module.exports = {
-  siteUrl: 'http://prosphere.duckdns.org',
+  siteUrl: 'http://localhost',
   generateRobotsTxt: true,
 }
 
