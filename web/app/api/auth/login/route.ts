@@ -1,3 +1,4 @@
+// app/api/auth/login/route.ts
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
@@ -42,11 +43,15 @@ export async function POST(request: Request) {
       );
 
     // 5. Retornar resposta com cookie HttpOnly
-    const response = NextResponse.json({ success: true, userId: user.id }, { status: 200 });
+    const response = NextResponse.json(
+      { success: true, userId: user.id },
+      { status: 200 }
+      );
+
     response.cookies.set("token", token, {
-      httpOnly: true,
+      httpOnly: true, // ← ESSENCIAL para o middleware funcionar
       secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
+      sameSite: "lax", // mais permissivo para redirecionamentos
       path: "/",
       maxAge: 60 * 60 * 24 * 7, // 7 dias
     });
@@ -55,10 +60,12 @@ export async function POST(request: Request) {
   } catch (error: any) {
     console.error("Erro no login:", error);
 
-    // 🔥 Sempre retorna JSON, mesmo em erro inesperado
     return NextResponse.json(
-      { error: "Erro interno no servidor.", details: error?.message || null },
-      { status: 500 }
-      );
+    {
+      error: "Erro interno no servidor.",
+      details: error?.message || null,
+    },
+    { status: 500 }
+    );
   }
 }

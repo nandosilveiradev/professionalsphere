@@ -1,6 +1,8 @@
 'use client';
 
-import Navbar from '@/app/components/system/Layout/Navbar';
+import Navbar from "../components/system/Navbar/Navbar";
+
+import "../styles/globals.css";
 
 export default function SystemLayout({
   children,
@@ -9,13 +11,8 @@ export default function SystemLayout({
 }) {
   return (
     <>
-    <Navbar
-      brand="Professional Sphere"
-      items={[
-        { label: 'Dashboard', href: '/dashboard' },
-        ]}
-      />
-      <main className="pt-24">{children}</main>
-      </>
-      );
+    <Navbar />
+    <main className="pt-24">{children}</main>
+    </>
+    );
 }
